@@ -19,7 +19,7 @@ class CheckToken extends StatelessWidget {
         future: Network.checkToken(provider.driver.driverToken),
         builder: (context, AsyncSnapshot<bool> snap) {
           if (snap.hasData) {
-            if (snap.data == false) {
+            if (snap.data ?? false) {
               return MainScreen();
             } else {
               return const AuthScreen();

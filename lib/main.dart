@@ -17,7 +17,7 @@ void main() async {
           create: (context) => driverProvider,
         ),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: CheckToken(),
       ),
