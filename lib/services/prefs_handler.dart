@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ridbrain_project/services/get_driver.dart';
 import 'package:ridbrain_project/services/objects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -104,6 +103,9 @@ class DriverProvider extends ChangeNotifier {
       driverPhone: prefs.getDriverPhone(),
       driverEmail: prefs.getDriverEmail(),
       driverToken: prefs.getDriverToken(),
+      driverStatus: prefs.getDriverStatus(),
+      driverId: prefs.getDriverId(),
+      driverRecordCount: prefs.getDriverRecordCount()
     ));
   }
 
@@ -115,14 +117,17 @@ class DriverProvider extends ChangeNotifier {
       value.setDriverName(driver.driverName);
       value.setDriverPhone(driver.driverPhone);
       value.setDriverEmail(driver.driverEmail);
+      value.setDriverUid(driver.driverId);
+      value.setDriverStatus(driver.driverStatus);
+      value.setDriverRecordCount(driver.driverRecordCount);
     });
   }
 
-  void setDriverToken(String newUid) {
-    _driver.driverToken = newUid;
+  void setDriverToken(String newToken) {
+    _driver.driverToken = newToken;
     notifyListeners();
     PrefsHandler.getInstance().then(
-      (value) => value.setDriverToken(newUid),
+      (value) => value.setDriverToken(newToken),
     );
   }
 

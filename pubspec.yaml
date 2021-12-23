@@ -37,6 +37,8 @@ dependencies:
   shared_preferences: ^2.0.11
   provider: ^6.0.1
   http: ^0.13.4
+  overlay_support: ^1.2.1
+  geolocator: ^8.0.1
 
 dev_dependencies:
   flutter_test:

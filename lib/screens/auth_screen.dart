@@ -1,10 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:ridbrain_project/screens/main_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:ridbrain_project/services/network.dart';
 import 'package:ridbrain_project/services/prefs_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -70,38 +69,34 @@ class _AuthScreenState extends State<AuthScreen> {
             width: 300, // <-- match_parent
             height: 100,
             child: Container(
-                padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
-                child: RaisedButton(
-                    child: const Text('Войти',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Colors.black,
-                            fontSize: 15),
-                        textAlign: TextAlign.center),
-                    color: Colors.grey[100],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    padding: const EdgeInsets.all(20),
-                    onPressed: () {
-                      if (_loginController.text.isNotEmpty &&
-                          _passController.text.isNotEmpty) {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => MainScreen()));
-                        Network.getDriver(
-                                _loginController.text, _passController.text)
-                            .then((answer) {
-                          if (answer.error == 0) {
-                            setState(() {
-                              DriverProvider(answer.driver)
-                                .setDriver(answer.driver);
-                            });
-                          }
-                        });
-                      }
-                    })),
+              padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
+              child: RaisedButton(
+                child: const Text('Войти',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.black,
+                        fontSize: 15),
+                    textAlign: TextAlign.center),
+                color: Colors.grey[100],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: const EdgeInsets.all(20),
+                onPressed: () {
+                  if (_loginController.text.isNotEmpty &&
+                      _passController.text.isNotEmpty) {
+                    Network.getDriver(
+                            _loginController.text, _passController.text)
+                        .then(
+                      (answer) {
+                        Provider.of<DriverProvider>(context, listen: false)
+                            .setDriver(answer);
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
           ),
         ],
       )),

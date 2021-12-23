@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ridbrain_project/screens/accept_orders_screen.dart';
+import 'package:ridbrain_project/screens/account_screen.dart';
+import 'package:ridbrain_project/screens/new_orders_screen.dart';
 import 'package:ridbrain_project/services/tab_item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -58,16 +61,10 @@ class _MainScreenState extends State<MainScreen>
         ],
       ),
       backgroundColor: Colors.white,
-      body: TabBarView(controller: _tabController, children: [
-        Container(
-          color: Colors.white,
-        ),
-        Container(
-          color: Colors.white,
-        ),
-        Container(
-          color: Colors.white,
-        ),
+      body: TabBarView(controller: _tabController, children: const [
+        NewOrdersScreen(),
+        AcceptOrdersScreen(),
+        AccountScreen(),
       ]),
     );
   }
