@@ -78,6 +78,29 @@ class Network {
     }
   }
 
+  static Future<bool> changeRecordStatus(String token, String recordId,
+      String recordStatus, String recordHistory) async {
+    try {
+      final responce = await http.post(
+          Uri.parse(
+            "https://server.roman.com.ru/app/scripts/change_record_status.php",
+          ),
+          body: {
+            "token": token,
+            "record_id": recordId,
+            "record_status": recordStatus,
+            "record_history": recordHistory
+          });
+
+      print(responce);
+
+      final MessageAnswer message = messageAnswerFromJson(responce.body);
+      return message.error == 0;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   static Future<List<Record>> getActiveRecords(token) async {
     try {
       final responce = await http.post(
@@ -143,19 +166,21 @@ class Network {
       return false;
     }
   }
-  Future addCoordinate(
+
+  static Future addCoordinates(
     String token,
     String driverId,
     String latitude,
     String longitude,
   ) async {
-    var address = 'add_coordinate.php';
-
-    var data = await _request(url: address, params: {
-      "token": token,
-      "driver_id": driverId,
-      "latitude": latitude,
-      "longitude": longitude,
-    });
+    await http.post(
+      Uri.parse("https://server.roman.com.ru/app/scripts/add_coordinate.php"),
+      body: {
+        "token": token,
+        "driver_id": driverId,
+        "latitude": latitude,
+        "longitude": longitude,
+      },
+    );
   }
 }

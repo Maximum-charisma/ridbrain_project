@@ -116,19 +116,22 @@ class _PassScreenState extends State<PassScreen> {
         _newPass.text.isNotEmpty &&
         _secondNewPass.text.isNotEmpty) {
       if (_newPass.text == _secondNewPass.text) {
-        var result = await Network(context).changePass(
-            provider.driver.driverToken, _oldPass.text, _newPass.text);
+        await Network(context).changePass(
+          provider.driver.driverToken,
+          _oldPass.text,
+          _newPass.text,
+        );
       } else {
         StandartSnackBar.show(
           context,
-          'Новые пароли не совпадают',
+          'Новые пароли не совпадают.',
           SnackBarStatus.warning(),
         );
       }
     } else {
       StandartSnackBar.show(
         context,
-        'Поля не заполнены',
+        'Поля не заполнены.',
         SnackBarStatus.warning(),
       );
     }

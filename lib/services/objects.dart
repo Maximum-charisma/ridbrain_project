@@ -325,7 +325,7 @@ class RecordStatus {
 
   static StatusRecord getStatusFromString(String statusString) {
     for (StatusRecord item in StatusRecord.values) {
-      if (item.toString() == statusString) {
+      if (item.name == statusString) {
         return item;
       }
     }
@@ -377,20 +377,18 @@ class DriverAnswer {
   DriverAnswer({
     required this.error,
     required this.driver,
+    required this.message,
   });
 
   int error;
-  Driver driver;
+  Driver? driver;
+  String message;
 
   factory DriverAnswer.fromJson(Map<String, dynamic> json) => DriverAnswer(
         error: json["error"],
-        driver: Driver.fromJson(json["driver"]),
+        driver: json["driver"] != null ? Driver.fromJson(json["driver"]) : null,
+        message: json["message"] ?? '',
       );
-
-  Map<String, dynamic> toJson() => {
-        "error": error,
-        "driver": driver.toJson(),
-      };
 }
 
 Driver getDriverFromJson(String str) => Driver.fromJson(json.decode(str));

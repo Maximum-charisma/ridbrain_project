@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ridbrain_project/services/network.dart';
 import 'package:ridbrain_project/services/prefs_handler.dart';
+import 'package:ridbrain_project/services/snack_bar.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -96,9 +97,17 @@ class _AuthScreenState extends State<AuthScreen> {
                                       _passController.text)
                                   .then(
                                 (answer) {
-                                  Provider.of<DriverProvider>(context,
-                                          listen: false)
-                                      .setDriver(answer.driver);
+                                  if (answer.error == 0) {
+                                    Provider.of<DriverProvider>(context,
+                                            listen: false)
+                                        .setDriver(answer.driver!);
+                                  } else {
+                                    StandartSnackBar.show(
+                                      context,
+                                      'Ошибка.',
+                                      SnackBarStatus.warning(),
+                                    );
+                                  }
                                 },
                               );
                             }

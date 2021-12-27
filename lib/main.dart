@@ -8,6 +8,8 @@ import 'package:ridbrain_project/services/prefs_handler.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var driverProvider = await DriverProvider.getInstance();
+  Location.determinePosition();
+
   runApp(
     MultiProvider(
       providers: [

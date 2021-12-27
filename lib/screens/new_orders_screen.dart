@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ridbrain_project/screens/record_cell.dart';
 import 'package:ridbrain_project/screens/record_screen.dart';
-import 'package:ridbrain_project/services/constants.dart';
 import 'package:ridbrain_project/services/network.dart';
 import 'package:ridbrain_project/services/objects.dart';
 
@@ -20,9 +19,24 @@ class _NewOrdersScreenState extends State<NewOrdersScreen> {
 
   void _updateList(String token) async {
     var result = await Network.getRecords(token);
-    setState(() {
-      _records = result;
-    });
+    if (mounted) {
+      setState(() {
+        _records = result;
+      });
+    }
+  }
+
+  void _updateRecord(Record record) {
+    var index = 0;
+    for (var item in _records) {
+      if (item.recordId == record.recordId) {
+        setState(() {
+          _records.removeAt(index);
+        });
+        break;
+      }
+      index++;
+    }
   }
 
   @override
@@ -61,6 +75,7 @@ class _NewOrdersScreenState extends State<NewOrdersScreen> {
                           MaterialPageRoute(
                             builder: (context) => RecordScreen(
                               record: record,
+                              update: _updateRecord,
                             ),
                           ));
                     });

@@ -38,7 +38,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 delegate: SliverChildListDelegate([
               // children: [
               Container(
-                margin: const EdgeInsets.all(15),
+                margin: const EdgeInsets.fromLTRB(15, 5, 15, 0),
                 padding: const EdgeInsets.only(left: 15),
                 height: 100,
                 child: Row(
@@ -55,18 +55,21 @@ class _AccountScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(provider.driver.driverName),
+                        Text(provider.driver.driverName,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w600)),
                         const SizedBox(
                           height: 15,
                         ),
-                        Text(provider.driver.driverEmail)
+                        Text(provider.driver.driverEmail,
+                            style: const TextStyle(fontWeight: FontWeight.w600))
                       ],
                     )
                   ],
                 ),
                 decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderRadius: radius,
                     boxShadow: shadow),
               ),
               Container(
@@ -111,11 +114,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: InkWell(
                     borderRadius: radius,
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PassScreen(),
-                          ));
+                      provider.signOut();
                     },
                     child: const Center(
                       child: ListTile(

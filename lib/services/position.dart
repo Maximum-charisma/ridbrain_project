@@ -1,14 +1,13 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ridbrain_project/services/network.dart';
+import 'package:ridbrain_project/services/objects.dart';
 
 class Location {
-  Location(this.context);
-  final BuildContext context;
+  Location(this.driver);
+  final Driver driver;
 
-  Future<Position> determinePosition() async {
+  static Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -34,13 +33,23 @@ class Location {
   }
 
   void sendLocation() {
-    const oneSec = Duration(minutes: 5);
+    determinePosition().then(
+      (value) {
+        Network.addCoordinates(driver.driverToken, driver.driverId.toString(),
+            value.latitude.toString(), value.longitude.toString());
+      },
+    );
+    const fiveMinutes = Duration(minutes: 5);
     Timer.periodic(
-      oneSec,
+      fiveMinutes,
       (Timer t) {
         determinePosition().then(
           (value) {
-            // Network.
+            Network.addCoordinates(
+                driver.driverToken,
+                driver.driverId.toString(),
+                value.latitude.toString(),
+                value.longitude.toString());
           },
         );
       },

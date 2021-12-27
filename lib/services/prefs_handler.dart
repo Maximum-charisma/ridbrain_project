@@ -84,6 +84,17 @@ class PrefsHandler {
   void setDriverToken(String value) {
     _preferences.setString(_driverToken, value);
   }
+
+  void setEmptyDriver() {
+    _preferences.setInt(_driverId, 0);
+    _preferences.setString(_driverName, '');
+    _preferences.setString(_driverEmail, '');
+    _preferences.setString(_driverPass, '');
+    _preferences.setString(_driverPhone, '');
+    _preferences.setInt(_driverStatus, 0);
+    _preferences.setInt(_driverRecordCount, 0);
+    _preferences.setString(_driverToken, '');
+  }
 }
 
 class DriverProvider extends ChangeNotifier {
@@ -153,5 +164,19 @@ class DriverProvider extends ChangeNotifier {
     PrefsHandler.getInstance().then(
       (value) => value.setDriverEmail(emailPhone),
     );
+  }
+
+  void signOut() {
+    _driver = Driver(
+        driverToken: '',
+        driverName: '',
+        driverPhone: '',
+        driverEmail: '',
+        driverId: 0,
+        driverStatus: 0,
+        driverRecordCount: 0);
+    notifyListeners();
+
+    PrefsHandler.getInstance().then((value) => value.setEmptyDriver());
   }
 }
