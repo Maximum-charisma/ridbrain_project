@@ -103,6 +103,9 @@ class DriverProvider extends ChangeNotifier {
       driverPhone: prefs.getDriverPhone(),
       driverEmail: prefs.getDriverEmail(),
       driverToken: prefs.getDriverToken(),
+      driverId: prefs.getDriverId(),
+      driverRecordCount: prefs.getDriverRecordCount(),
+      driverStatus: prefs.getDriverStatus(),
     ));
   }
 
@@ -112,8 +115,11 @@ class DriverProvider extends ChangeNotifier {
     PrefsHandler.getInstance().then((value) {
       value.setDriverToken(driver.driverToken);
       value.setDriverName(driver.driverName);
+      value.setDriverUid(driver.driverId);
       value.setDriverPhone(driver.driverPhone);
       value.setDriverEmail(driver.driverEmail);
+      value.setDriverStatus(driver.driverStatus);
+      value.setDriverRecordCount(driver.driverRecordCount);
     });
   }
 

@@ -191,6 +191,10 @@ class RecordAnswer {
       };
 }
 
+Record recordFromJson(String str) => Record.fromJson(json.decode(str));
+
+String recordToJson(Record data) => json.encode(data.toJson());
+
 class Record {
   Record({
     required this.recordId,
@@ -199,7 +203,6 @@ class Record {
     required this.recordNote,
     required this.company,
     required this.recordHistory,
-    this.driver,
   });
 
   int recordId;
@@ -207,15 +210,7 @@ class Record {
   StatusRecord recordStatus;
   String recordNote;
   Company company;
-  Driver? driver;
   List<RecordStatus> recordHistory;
-
-  String driverName() {
-    if (driver == null) {
-      return "Водитель не назначен";
-    }
-    return driver!.driverName;
-  }
 
   Color getColor() {
     switch (recordStatus) {
@@ -253,7 +248,7 @@ class Record {
 
   static StatusRecord getStatusFromString(String statusString) {
     for (StatusRecord item in StatusRecord.values) {
-      if (item.toString() == statusString) {
+      if (item.name == statusString) {
         return item;
       }
     }
@@ -267,7 +262,6 @@ class Record {
           json["record_history"].map((x) => RecordStatus.fromJson(x)),
         ),
         recordNote: json["record_note"],
-        driver: json["driver"] != null ? Driver.fromJson(json["driver"]) : null,
         company: Company.fromJson(json["company"]),
         recordStatus: getStatusFromString(json['record_status']),
       );
@@ -279,7 +273,6 @@ class Record {
           recordHistory.map((x) => x.toJson()),
         ),
         "record_note": recordNote,
-        "driver": driver != null ? driver!.toJson() : "",
         "record_status": recordStatus.name,
         "company": company.toJson(),
       };
@@ -410,12 +403,18 @@ class Driver {
     required this.driverName,
     required this.driverPhone,
     required this.driverEmail,
+    required this.driverId,
+    required this.driverStatus,
+    required this.driverRecordCount,
   });
 
   String driverToken;
   String driverName;
   String driverPhone;
   String driverEmail;
+  int driverId;
+  int driverStatus;
+  int driverRecordCount;
 
   // String getStatus() {
   //   if (driverStatus == 1) {
@@ -426,17 +425,22 @@ class Driver {
   // }
 
   factory Driver.fromJson(Map<String, dynamic> json) => Driver(
-    driverToken: json["driver_token"],
+        driverToken: json["driver_token"],
         driverName: json["driver_name"],
+        driverId: json["driver_id"],
         driverPhone: json["driver_phone"],
         driverEmail: json["driver_email"],
+        driverStatus: json["driver_status"],
+        driverRecordCount: json["driver_record_count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "driver_token": driverToken,
         "driver_name": driverName,
         "driver_phone": driverPhone,
         "driver_email": driverEmail,
+        "driver_status": driverStatus,
+        "driver_id": driverId,
+        "driver_record_count": driverRecordCount,
       };
 }
 
@@ -642,4 +646,22 @@ class GoogleLocation {
         "lat": lat,
         "lng": lng,
       };
+}
+
+MessageAnswer messageAnswerFromJson(String str) =>
+    MessageAnswer.fromJson(json.decode(str));
+
+class MessageAnswer {
+  MessageAnswer({
+    required this.error,
+    required this.message,
+  });
+
+  int error;
+  String message;
+
+  factory MessageAnswer.fromJson(Map<String, dynamic> json) => MessageAnswer(
+        error: json["error"] ?? 1,
+        message: json["message"] ?? "",
+      );
 }

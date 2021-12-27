@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ridbrain_project/screens/change_pass_screen.dart';
+import 'package:ridbrain_project/services/constants.dart';
 import 'package:ridbrain_project/services/prefs_handler.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -43,12 +45,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Image.network(
-                        'https://tetatet.fun/images/player_one.png',
-                        width: 70,
-                      ),
-                    ),
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Icon(
+                          Icons.account_circle_outlined,
+                          size: 60,
+                          color: Colors.grey[400],
+                        )),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,90 +67,74 @@ class _AccountScreenState extends State<AccountScreen> {
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.black12,
-                          offset: Offset(1, 3))
-                    ]),
+                    boxShadow: shadow),
               ),
               Container(
                 height: 75,
-                width: double.infinity,
                 margin: const EdgeInsets.fromLTRB(15, 30, 15, 0),
-                child: RaisedButton(
-                  elevation: 0,
-                  hoverElevation: 0,
-                  focusElevation: 0,
-                  highlightElevation: 0,
-                  onPressed: () {},
-                  child: const Center(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.account_circle_outlined,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Изменить пароль',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: radius,
+                  child: InkWell(
+                    borderRadius: radius,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PassScreen(),
+                          ));
+                    },
+                    child: const Center(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.account_circle_outlined,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        title: Text(
+                          'Изменить пароль',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                   ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
                 ),
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.black12,
-                          offset: Offset(1, 3))
-                    ]),
+                    borderRadius: radius, boxShadow: shadow),
               ),
               Container(
                 height: 75,
-                width: double.infinity,
                 margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                child: RaisedButton(
-                  elevation: 0,
-                  hoverElevation: 0,
-                  focusElevation: 0,
-                  highlightElevation: 0,
-                  onPressed: () {},
-                  child: const Center(
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.logout_outlined,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Выйти',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: radius,
+                  child: InkWell(
+                    borderRadius: radius,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PassScreen(),
+                          ));
+                    },
+                    child: const Center(
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.logout_outlined,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        title: Text(
+                          'Выйти',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                   ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
                 ),
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.black12,
-                          offset: Offset(1, 3))
-                    ]),
+                    borderRadius: radius, boxShadow: shadow),
               ),
-              // ],
             ]))
           ],
         ));

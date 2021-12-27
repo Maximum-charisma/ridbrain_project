@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ridbrain_project/screens/record_cell.dart';
+import 'package:ridbrain_project/screens/record_screen.dart';
+import 'package:ridbrain_project/services/constants.dart';
+import 'package:ridbrain_project/services/network.dart';
+import 'package:ridbrain_project/services/objects.dart';
+
+import '../services/prefs_handler.dart';
 
 class NewOrdersScreen extends StatefulWidget {
   const NewOrdersScreen({Key? key}) : super(key: key);
@@ -8,8 +16,23 @@ class NewOrdersScreen extends StatefulWidget {
 }
 
 class _NewOrdersScreenState extends State<NewOrdersScreen> {
+  List<Record> _records = [];
+
+  void _updateList(String token) async {
+    var result = await Network.getRecords(token);
+    setState(() {
+      _records = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<DriverProvider>(context);
+
+    if (_records.isEmpty) {
+      _updateList(provider.driver.driverToken);
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -26,68 +49,25 @@ class _NewOrdersScreenState extends State<NewOrdersScreen> {
               centerTitle: true,
             ),
           ),
-          SliverToBoxAdapter(
-            child: FutureBuilder(
-              future: null,
-              builder: (context, AsyncSnapshot<bool> snap) {
-                return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 90,
-                      width: double.infinity,
-                      margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                      child: RaisedButton(
-                        elevation: 0,
-                        highlightColor: Colors.red.shade100,
-                        hoverElevation: 0,
-                        focusElevation: 0,
-                        highlightElevation: 0,
-                        onPressed: () {},
-                        child: Center(
-                          child: ListTile(
-                            leading: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Text('Сиписи'),
-                                Text('Дата: 11/18/21')
-                              ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                var record = _records[index];
+                return RecordCell(
+                    record: record,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RecordScreen(
+                              record: record,
                             ),
-                            trailing: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Text('Новый'),
-                                Text('Месяц назад')
-                              ],
-                            ),
-                          ),
-                        ),
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 10,
-                              color: Colors.black12,
-                              offset: Offset(1, 3))
-                        ],
-                      ),
-                    );
-                  },
-                );
+                          ));
+                    });
               },
+              childCount: _records.length,
             ),
-          )
+          ),
         ],
       ),
     );
