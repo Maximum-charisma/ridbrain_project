@@ -407,48 +407,36 @@ String getDriverToJson(Driver data) => json.encode(data.toJson());
 class Driver {
   Driver({
     required this.driverToken,
-    required this.driverId,
     required this.driverName,
     required this.driverPhone,
     required this.driverEmail,
-    required this.driverStatus,
-    required this.driverRecordCount,
   });
 
   String driverToken;
-  int driverId;
   String driverName;
   String driverPhone;
   String driverEmail;
-  int driverStatus;
-  int driverRecordCount;
 
-  String getStatus() {
-    if (driverStatus == 1) {
-      return "Активный";
-    } else {
-      return "Отключён";
-    }
-  }
+  // String getStatus() {
+  //   if (driverStatus == 1) {
+  //     return "Активный";
+  //   } else {
+  //     return "Отключён";
+  //   }
+  // }
 
   factory Driver.fromJson(Map<String, dynamic> json) => Driver(
     driverToken: json["driver_token"],
-        driverId: json["driver_id"],
         driverName: json["driver_name"],
         driverPhone: json["driver_phone"],
         driverEmail: json["driver_email"],
-        driverStatus: json["driver_status"],
-        driverRecordCount: json["driver_record_count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "driver_token": driverId,
-        "driver_id": driverId,
+        "driver_token": driverToken,
         "driver_name": driverName,
         "driver_phone": driverPhone,
         "driver_email": driverEmail,
-        "driver_status": driverStatus,
-        "driver_record_count": driverRecordCount,
       };
 }
 

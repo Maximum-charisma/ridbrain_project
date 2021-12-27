@@ -10,6 +10,21 @@ class AcceptOrdersScreen extends StatefulWidget {
 class _AcceptOrdersScreenState extends State<AcceptOrdersScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 80,
+          backgroundColor: Colors.white,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(
+              'Принятые заявки',
+              style: TextStyle(color: Colors.black),
+            ),
+            centerTitle: true,
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -36,14 +36,14 @@ class _MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.3,
-        backgroundColor: Colors.white,
-        title: Text(
-          _tabBar[_tabController.index].title,
-          style: const TextStyle(color: Colors.black, fontSize: 18),
-        ),
-      ),
+      // appBar: AppBar(
+      //   elevation: 0.3,
+      //   backgroundColor: Colors.white,
+      //   title: Text(
+      //     _tabBar[_tabController.index].title,
+      //     style: const TextStyle(color: Colors.black, fontSize: 18),
+      //   ),
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

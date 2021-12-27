@@ -20,13 +20,13 @@ class Network {
     }
   }
 
-  static Future<Driver> getDriver(login, pass) async {
+  static Future<DriverAnswer> getDriver(login, pass) async {
     try {
       final responce = await http.post(
           Uri.parse("https://server.roman.com.ru/app/scripts/user_auth.php"),
           body: {"login": login, "pass": pass});
 
-      final Driver driver = getDriverFromJson(responce.body);
+      final DriverAnswer driver = driverAnswerFromJson(responce.body);
       return driver;
     } catch (e) {
       throw Exception(e);
